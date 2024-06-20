@@ -31,7 +31,7 @@ const Navbar = () => {
   return (
     <div className=''>
         <div className='bg-red-400 flex justify-center items-center p-4 gap-3 shadow-lg'>
-            <input type="text" placeholder='Enter pokemon name' className='w-1/2  p-2 rounded-lg' onChange={(e) => setPokemon(e.target.value.toLowerCase())} />
+            <input type="text" placeholder='Enter pokemon name' className='w-1/2  p-2 rounded-lg' onChange={(e) => setPokemon(e.target.value.toLowerCase())} onKeyDown={(e) => (e.key === "Enter") && fetchData} />
             <button className='px-10 py-2 bg-white rounded-lg bg-gray-200' onClick={fetchData}>Search</button>
         </div>
         <div className=''>
