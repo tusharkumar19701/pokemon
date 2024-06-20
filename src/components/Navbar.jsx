@@ -1,37 +1,29 @@
 import React, { useEffect, useState } from 'react'
 import MainBody from './MainBody';
-// import MainBody from './MainBody';
 
 const Navbar = () => {
     const [pokemon,setPokemon] = useState("");
     const [loading,setLoading] = useState(false);
-    const [data,setData] = useState([]);
     const [allData,setAllData] = useState("");
-    console.log("poke",pokemon);
 
     async function fetchData() {
         setLoading(true);
         const data = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon}`);
         const json = await data.json();
-        setLoading(false);
         setAllData(json);
-        // console.log(json);
+        setLoading(false);
     }
-    async function mainData() {
-        const data = await fetch(`https://pokeapi.co/api/v2/pokemon/`);
-        const json = await data.json()
-        console.log(json);
-        setData(json?.results);
+
+    function searchHandler(e) {
+        if(e.key === "Enter") {
+            fetchData();
+        }
     }
-    console.log(data);
-    useEffect(() => {
-        mainData();
-    },[]);
 
   return (
     <div className=''>
         <div className='bg-red-400 flex justify-center items-center p-4 gap-3 shadow-lg'>
-            <input type="text" placeholder='Enter pokemon name' className='w-1/2  p-2 rounded-lg' onChange={(e) => setPokemon(e.target.value.toLowerCase())} onKeyDown={(e) => (e.key === "Enter") && fetchData} />
+            <input type="text" placeholder='Enter pokemon name' className='w-1/2  p-2 rounded-lg' onChange={(e) => setPokemon(e.target.value.toLowerCase())} onKeyDown={searchHandler} />
             <button className='px-10 py-2 bg-white rounded-lg bg-gray-200' onClick={fetchData}>Search</button>
         </div>
         <div className=''>
